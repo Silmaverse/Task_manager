@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@utility container {
+  margin-inline: auto;
+}
+
+
+@theme {
+  --font-poppins: Poppins, sans-serif;
+  --color-background:#E8EDF2;
+  --color-primary:#FFFFFF;
+  --color-textprimary:#07070C;
+  --color-textsecondary:#C6CBD9;
+  --color-btnprimary:#7364DB;
+}
