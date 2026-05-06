@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { RiUserLine } from "react-icons/ri";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { BsTelephone } from "react-icons/bs";
@@ -6,8 +6,45 @@ import { MdOutlinePassword } from "react-icons/md";
 import { FaRegFile } from "react-icons/fa6";
 import { TiTick } from "react-icons/ti";
 import { Link } from "react-router";
+import Button from "./Button";
+import Input from "./Input";
 
 const SignupForm = () => {
+
+  const[formdata ,setformdata]=useState({
+     avatar:"",
+     fullname:"",
+     email:"",
+     password:"",
+     confirmpassword:"",
+  });
+
+  const handleInpuchange =(e)=>{
+    setallerrors((prev)=>({...prev,[`${e.target.name}error`]:"border-background"}))
+    
+    setformdata((currdata)=>{
+      return {...currdata, [e.target.name]:e.target.value}
+    })
+
+  }
+  const [allerrors,setallerrors]=useState({
+     fullnameerror:"border-background",
+     avatarerror:"border-background",
+     emailerror:"border-background",
+     passworderror:"border-background",
+     confirmpassworderror:"border-background",
+  })
+  
+  const handleSubmit=(e)=>{
+    if(!formdata.fullname) {setallerrors((prev)=>({...prev,fullnameerror:"border-red-400"}))}
+    if(!formdata.email) {setallerrors((prev)=>({...prev,emailerror:"border-red-400"}))}
+    if(!formdata.password) {setallerrors((prev)=>({...prev,passworderror:"border-red-400"}))}
+    if(!formdata.confirmpassword) return setallerrors((prev)=>({...prev,confirmpassworderror:"border-red-400"}))
+    e.preventDefault()
+    
+  }
+  console.log(formdata)
+
   return (
     <div>
       <div className="w-110 p-10 bg-primary rounded-2xl">
@@ -20,77 +57,84 @@ const SignupForm = () => {
           </p>
         </div>
         <div className="">
-          <form  action="/login">
+          <form action="/login" onSubmit={handleSubmit}>
             <div className="Avatar mt-5">
-              <label className="font-poppins font-normal text-[14px] text-textprimary">
-                Avatar
-              </label>
-              <div className="mt-2">
-                <div className="w-full flex justify-between items-center p-3.75 border border-background rounded-lg">
-                  <input
-                    type="file"
-                    placeholder="upload file"
-                    className="outline-none font-poppins text-[14px] text-textsecondary"
-                  ></input>
-                  <FaRegFile className="text-xl text-textsecondary" />
-                </div>
-              </div>
+              <Input
+                labelName={"Avatar"}
+                idname={"avatar"}
+                children={"Upload a File"}
+                variant={"primary"}
+                types="file"
+                files={"image/*"}
+                names={"avatar"}
+                values={formdata.avatar}
+                Icon={FaRegFile}
+                customstyles={allerrors.avatarerror}
+                handlechange={handleInpuchange}
+              ></Input>
             </div>
             <div className="name mt-5">
-              <label className="name">
-                <span className="font-poppins font-normal text-[14px] text-textprimary ">
-                  Your name
-                </span>
-              </label>
-              <div className="w-full flex justify-between items-center mt-2">
-                <div className="w-full p-3.75 flex items-center gap-2 border border-background rounded-lg">
-                  <input
-                    type="text"
-                    placeholder="FullName"
-                    className="w-full  border-none outline-none font-poppins text-[14px] text-textsecondary"
-                  />
-                  <RiUserLine className="text-textsecondary text-2xl" />
-                </div>
-              </div>
+              <Input
+                labelName={"Your name"}
+                idname={"fullname"}
+                variant={"primary"}
+                children={"FullName"}
+                types="text"
+                names={"fullname"}
+                customstyles={allerrors.fullnameerror}
+                values={formdata.fullname}
+                Icon={RiUserLine}
+                handlechange={handleInpuchange}
+              ></Input>
             </div>
             <div className="email mt-5">
-              <label className="font-poppins font-normal text-[14px] text-textprimary">
-                E-mail
-              </label>
-              <div className="mt-2">
-                <div className="w-full flex justify-between items-center p-3.75 border border-background rounded-lg">
-                  <input
-                    type="email"
-                    placeholder="E-mail"
-                    className="outline-none font-poppins text-[14px] text-textsecondary"
-                  ></input>
-                  <MdOutlineMailOutline className="text-xl text-textsecondary" />
-                </div>
-              </div>
+              <Input
+                labelName={"E-mail"}
+                idname={"email"}
+                variant={"primary"}
+                children={"E-mail"}
+                types="email"
+                names={"email"}
+                customstyles={allerrors.emailerror}
+                values={formdata.email}
+                Icon={MdOutlineMailOutline}
+                handlechange={handleInpuchange}
+              ></Input>
             </div>
             <div className="Password mt-5">
-              <label className="font-poppins font-normal text-[14px] text-textprimary">
-                Password
-              </label>
-              <div className="mt-2">
-                <div className="w-full flex justify-between items-center p-3.75 border border-background rounded-lg">
-                  <input
-                    type="number"
-                    placeholder="Password"
-                    className="outline-none font-poppins text-[14px] text-textsecondary"
-                  ></input>
-                  <MdOutlinePassword className="text-xl text-textsecondary" />
-                </div>
-              </div>
+              <Input
+                labelName={"Password"}
+                idname={"password"}
+                variant={"primary"}
+                children={"Password"}
+                customstyles={allerrors.passworderror}
+                types="password"
+                names={"password"}
+                values={formdata.password}
+                Icon={MdOutlinePassword}
+                handlechange={handleInpuchange}
+              ></Input>
             </div>
-            
-            <button
-              type="submit"
-              className="w-full my-5 bg-btnprimary rounded-lg py-3.5 font-poppins text-[16px] font-semibold text-primary"
-            >
-              {" "}
-              Sign up
-            </button>
+            <div className="Confirm_Password mt-5">
+              <Input
+                labelName={"Confirm Password"}
+                idname={"confirmpassword"}
+                variant={"primary"}
+                children={"Confirm Password"}
+                customstyles={allerrors.confirmpassworderror}
+                types="password"
+                names={"confirmpassword"}
+                values={formdata.confirmpassword}
+                Icon={MdOutlinePassword}
+                handlechange={handleInpuchange}
+              ></Input>
+            </div>
+            <Button
+              types={"submit"}
+              variant={"primary"}
+              customstyles={"w-full"}
+              children={"Sign up"}
+            ></Button>
           </form>
           <div className="terms flex items-center gap-2.5 w-full">
             <div className="w-5 h-5 rounded-sm  bg-background">
@@ -103,7 +147,9 @@ const SignupForm = () => {
           <div className="sigin text-center mt-5">
             <p className="font-poppins text-sm font-normal text-textprimary">
               Already have an account?{" "}
-              <Link to={"/login"} className="text-btnprimary">Sign in</Link>{" "}
+              <Link to={"/login"} className="text-btnprimary">
+                Sign in
+              </Link>{" "}
             </p>
           </div>
         </div>
