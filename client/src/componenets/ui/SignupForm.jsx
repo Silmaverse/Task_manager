@@ -10,40 +10,109 @@ import Button from "./Button";
 import Input from "./Input";
 
 const SignupForm = () => {
-
-  const[formdata ,setformdata]=useState({
-     avatar:"",
-     fullname:"",
-     email:"",
-     password:"",
-     confirmpassword:"",
+  const [formdata, setformdata] = useState({
+    avatar: "",
+    fullname: "",
+    email: "",
+    password: "",
+    confirmpassword: "",
   });
 
-  const handleInpuchange =(e)=>{
-    setallerrors((prev)=>({...prev,[`${e.target.name}error`]:"border-background"}))
-    
-    setformdata((currdata)=>{
-      return {...currdata, [e.target.name]:e.target.value}
-    })
+  const emailRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
-  }
-  const [allerrors,setallerrors]=useState({
-     fullnameerror:"border-background",
-     avatarerror:"border-background",
-     emailerror:"border-background",
-     passworderror:"border-background",
-     confirmpassworderror:"border-background",
-  })
-  
-  const handleSubmit=(e)=>{
-    if(!formdata.fullname) {setallerrors((prev)=>({...prev,fullnameerror:"border-red-400"}))}
-    if(!formdata.email) {setallerrors((prev)=>({...prev,emailerror:"border-red-400"}))}
-    if(!formdata.password) {setallerrors((prev)=>({...prev,passworderror:"border-red-400"}))}
-    if(!formdata.confirmpassword) return setallerrors((prev)=>({...prev,confirmpassworderror:"border-red-400"}))
-    e.preventDefault()
-    
-  }
-  console.log(formdata)
+  const handleInpuchange = (e) => {
+    setformdata((currdata) => {
+      return {
+        ...currdata,
+        [e.target.name]:
+          [e.target.name] == "avatar" ? e.target.files[0] : e.target.value,
+      };
+    });
+    setallerrors((prev) => ({
+      ...prev,
+      [`${e.target.name}error`]: {
+        color: "border-background",
+        msg: "",
+      },
+    }));
+  };
+  const [allerrors, setallerrors] = useState({
+    avatarerror: { color: "border-background" },
+    fullnameerror: { color: "border-background", msg: "" },
+    emailerror: { color: "border-background", msg: "" },
+    passworderror: { color: "border-background", msg: "" },
+    confirmpassworderror: { color: "border-background", msg: "" },
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!formdata.fullname.trim()) {
+      setallerrors((prev) => ({
+        ...prev,
+        fullnameerror: {
+          ...prev.fullnameerror,
+          color: "border-red-400",
+          msg: "Fullname is required",
+        },
+      }));
+    }
+    if (!formdata.email) {
+      setallerrors((prev) => ({
+        ...prev,
+        emailerror: {
+          ...prev.emailerror,
+          color: "border-red-400",
+          msg: "Email is required",
+        },
+      }));
+    } else if (!emailRegex.test(formdata.email)) {
+      console.log("Invalid email")
+      setallerrors((prev) => ({
+        ...prev,
+        emailerror: {
+          ...prev.emailerror,
+          color: "border-red-400",
+          msg: "Invalid email",
+        },
+      }));
+    }
+    if (!formdata.password) {
+      setallerrors((prev) => ({
+        ...prev,
+        passworderror: {
+          ...prev.passworderror,
+          color: "border-red-400",
+          msg: "Password is required",
+        },
+      }));
+    }
+    if (!formdata.confirmpassword) {
+      setallerrors((prev) => ({
+        ...prev,
+        confirmpassworderror: {
+          ...prev.confirmpassworderror,
+          color: "border-red-400",
+          msg: "Confirm password is required",
+        },
+      }));
+    } else if (formdata.confirmpassword !== formdata.password) {
+      setallerrors((prev) => ({
+        ...prev,
+        passworderror: {
+          ...prev.passworderror,
+          color: "border-red-400",
+          msg: "Password must match",
+        },
+        confirmpassworderror: {
+          ...prev.confirmpassworderror,
+          color: "border-red-400",
+          msg: "Password must match",
+        },
+      }));
+    }
+  };
+  console.log(formdata);
 
   return (
     <div>
@@ -57,7 +126,7 @@ const SignupForm = () => {
           </p>
         </div>
         <div className="">
-          <form action="/login" onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <div className="Avatar mt-5">
               <Input
                 labelName={"Avatar"}
@@ -67,9 +136,9 @@ const SignupForm = () => {
                 types="file"
                 files={"image/*"}
                 names={"avatar"}
+                customstyles={allerrors.avatarerror.color}
                 values={formdata.avatar}
                 Icon={FaRegFile}
-                customstyles={allerrors.avatarerror}
                 handlechange={handleInpuchange}
               ></Input>
             </div>
@@ -81,7 +150,8 @@ const SignupForm = () => {
                 children={"FullName"}
                 types="text"
                 names={"fullname"}
-                customstyles={allerrors.fullnameerror}
+                customstyles={allerrors.fullnameerror.color}
+                error={allerrors.fullnameerror.msg}
                 values={formdata.fullname}
                 Icon={RiUserLine}
                 handlechange={handleInpuchange}
@@ -93,9 +163,10 @@ const SignupForm = () => {
                 idname={"email"}
                 variant={"primary"}
                 children={"E-mail"}
-                types="email"
+                types="text"
                 names={"email"}
-                customstyles={allerrors.emailerror}
+                customstyles={allerrors.emailerror.color}
+                error={allerrors.emailerror.msg}
                 values={formdata.email}
                 Icon={MdOutlineMailOutline}
                 handlechange={handleInpuchange}
@@ -107,9 +178,10 @@ const SignupForm = () => {
                 idname={"password"}
                 variant={"primary"}
                 children={"Password"}
-                customstyles={allerrors.passworderror}
                 types="password"
                 names={"password"}
+                customstyles={allerrors.passworderror.color}
+                error={allerrors.passworderror.msg}
                 values={formdata.password}
                 Icon={MdOutlinePassword}
                 handlechange={handleInpuchange}
@@ -121,9 +193,10 @@ const SignupForm = () => {
                 idname={"confirmpassword"}
                 variant={"primary"}
                 children={"Confirm Password"}
-                customstyles={allerrors.confirmpassworderror}
                 types="password"
                 names={"confirmpassword"}
+                customstyles={allerrors.confirmpassworderror.color}
+                error={allerrors.confirmpassworderror.msg}
                 values={formdata.confirmpassword}
                 Icon={MdOutlinePassword}
                 handlechange={handleInpuchange}

@@ -11,10 +11,11 @@ const Input = ({
   children,
   types,
   Icon,
-  handlechange
+  handlechange,
+  error
 }) => {
   const inputstyle = {
-    primary: "outline-none font-poppins text-[14px] text-textsecondary",
+    primary: "outline-none font-poppins text-[14px] text-gray-600",
   };
 
   const style = inputstyle[variant] || inputstyle.primary;
@@ -41,6 +42,7 @@ const Input = ({
           ></input>
           <Icon className="text-xl text-textsecondary" />
         </div>
+        {error && <p className="text-sm mt-3 text-red-400 font-normal ">{error}</p>}
       </div>
     </>
   );
