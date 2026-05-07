@@ -18,15 +18,14 @@ const SignupForm = () => {
     confirmpassword: "",
   });
 
-  const emailRegex =
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const handleInpuchange = (e) => {
     setformdata((currdata) => {
       return {
         ...currdata,
         [e.target.name]:
-          [e.target.name] == "avatar" ? e.target.files[0] : e.target.value,
+          [e.target.name] === "avatar" ? e.target.files[0] : e.target.value,
       };
     });
     setallerrors((prev) => ({
@@ -38,7 +37,7 @@ const SignupForm = () => {
     }));
   };
   const [allerrors, setallerrors] = useState({
-    avatarerror: { color: "border-background" },
+    avatarerror: { color: "border-background" ,msg:""},
     fullnameerror: { color: "border-background", msg: "" },
     emailerror: { color: "border-background", msg: "" },
     passworderror: { color: "border-background", msg: "" },
@@ -66,17 +65,19 @@ const SignupForm = () => {
           msg: "Email is required",
         },
       }));
-    } else if (!emailRegex.test(formdata.email)) {
-      console.log("Invalid email")
-      setallerrors((prev) => ({
-        ...prev,
-        emailerror: {
-          ...prev.emailerror,
-          color: "border-red-400",
-          msg: "Invalid email",
-        },
-      }));
     }
+     else if(!emailRegex.test(formdata.email)) {
+       console.log("Invalid email")
+       setallerrors((prev) => ({
+         ...prev,
+         emailerror: {
+           ...prev.emailerror,
+           color: "border-red-400",
+           msg: "Invalid email",
+         },
+       }));
+     }
+    
     if (!formdata.password) {
       setallerrors((prev) => ({
         ...prev,
@@ -95,21 +96,25 @@ const SignupForm = () => {
           color: "border-red-400",
           msg: "Confirm password is required",
         },
-      }));
-    } else if (formdata.confirmpassword !== formdata.password) {
-      setallerrors((prev) => ({
-        ...prev,
-        passworderror: {
-          ...prev.passworderror,
-          color: "border-red-400",
-          msg: "Password must match",
-        },
-        confirmpassworderror: {
-          ...prev.confirmpassworderror,
-          color: "border-red-400",
-          msg: "Password must match",
-        },
-      }));
+      })) 
+      ;
+    }
+    if(formdata.password && formdata.confirmpassword){
+      if (formdata.confirmpassword !== formdata.password) {
+        setallerrors((prev) => ({
+          ...prev,
+          passworderror: {
+            ...prev.passworderror,
+            color: "border-red-400",
+            msg: "Password must match",
+          },
+          confirmpassworderror: {
+            ...prev.confirmpassworderror,
+            color: "border-red-400",
+            msg: "Password must match",
+          },
+        }));
+      }
     }
   };
   console.log(formdata);
@@ -137,7 +142,6 @@ const SignupForm = () => {
                 files={"image/*"}
                 names={"avatar"}
                 customstyles={allerrors.avatarerror.color}
-                values={formdata.avatar}
                 Icon={FaRegFile}
                 handlechange={handleInpuchange}
               ></Input>
