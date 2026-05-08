@@ -2,7 +2,6 @@ import React from "react";
 
 const Input = ({
   variant,
-  customstyles,
   files,
   names,
   idname,
@@ -14,9 +13,11 @@ const Input = ({
   handlechange,
   error
 }) => {
+
   const inputstyle = {
     primary: "outline-none font-poppins text-[14px] text-gray-600",
-  };
+  }
+  const borderstyle=error?"border-red-400":"border-background";
 
   const style = inputstyle[variant] || inputstyle.primary;
 
@@ -29,7 +30,7 @@ const Input = ({
         {labelName}
       </label>
       <div className="mt-2">
-        <div className={`w-full flex justify-between items-center p-3.75 border ${customstyles} rounded-lg`}>
+        <div className={`w-full flex justify-between items-center p-3.75 border ${borderstyle} rounded-lg`}>
           <input
             id={idname}
             type={types}

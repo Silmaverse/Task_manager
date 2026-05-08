@@ -4,6 +4,7 @@ import {BrowserRouter} from "react-router"
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import EmailVerify from "./pages/EmailVerify";
+import Dashboard from "./pages/Dashboard";
 
 const App = () => {
   return (
@@ -11,7 +12,8 @@ const App = () => {
       <Routes>
         <Route index element={<Register />} />
         <Route path="/login" element={<Login />} /> 
-        <Route path="/email-verify" element={<EmailVerify/>} />         
+        <Route path="/email-verify" element={<EmailVerify/>} />
+        <Route path="/dashboard" element={<Dashboard/>}/>         
       </Routes>
    </BrowserRouter>
   );

@@ -2,7 +2,7 @@ import React, { use, useState } from "react";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { MdOutlinePassword } from "react-icons/md";
 import logo from "../../assets/images/Logo.png";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Button from "./Button";
 import Input from "./Input";
 export const LoginForm = () => {
@@ -12,24 +12,48 @@ export const LoginForm = () => {
   });
 
   const [allerrors, setallerrors] = useState({
-    emailerror: "border-background",
-    passworderror: "border-background",
   });
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const handleInputChange = (e) => {
     setallerrors((prev) => ({
       ...prev,
-      [`${e.target.name}error`]: "border-background",
+      [e.target.name]: "",
     }));
     setformdata((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
-    if (!formdata.email)
-      setallerrors((prev) => ({ ...prev, emailerror: "border-red-400" }));
-    if (!formdata.password)
-      setallerrors((prev) => ({ ...prev, passworderror: "border-red-400" }));
+  const validateForm=()=>{
+
+    const newerror={}
+    if(!formdata.email) newerror.email="Email is required";
+    else if(!emailRegex.test(formdata.email)) newerror.email="Invalid Email";
+    if(!formdata.password) newerror.password="Password is required";
+
+    return newerror;
+    
+  }
+
+  const navigate=useNavigate();
+
+  const handleSubmit =async (e) => {
     e.preventDefault();
+    const errors=validateForm();
+    if(Object.keys(errors).length>0){
+       setallerrors((prev)=>(
+        {
+          ...prev,
+          ...errors
+        }
+       ))
+       return;
+    }
+    setallerrors({})
+    const res=await  formdata;
+    console.log("Login Success",formdata);
+    navigate("/dashboard")
+
   };
 
   console.log(formdata)
@@ -54,7 +78,7 @@ export const LoginForm = () => {
               <Input
                 labelName={"E-mail"}
                 idname={"email"}
-                customstyles={allerrors.emailerror}
+                error={allerrors.email}
                 handlechange={handleInputChange}
                 names={"email"}
                 values={formdata.email}
@@ -68,7 +92,7 @@ export const LoginForm = () => {
               <Input
                 labelName={"Password"}
                 idname={"password"}
-                customstyles={allerrors.passworderror}
+                error={allerrors.password}
                 names={"password"}
                 values={formdata.password}
                 types="password"
