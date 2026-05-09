@@ -5,7 +5,11 @@ import logo from "../../assets/images/Logo.png";
 import { Link, useNavigate } from "react-router";
 import Button from "./Button";
 import Input from "./Input";
+import { useLoginMutation } from "../../services/api";
 export const LoginForm = () => {
+
+  const [login]=useLoginMutation()
+
   const [formdata, setformdata] = useState({
     email: "",
     password: "",
@@ -50,9 +54,18 @@ export const LoginForm = () => {
        return;
     }
     setallerrors({})
-    const res=await  formdata;
-    console.log("Login Success",formdata);
-    navigate("/dashboard")
+    const res=await login(formdata);
+    if(res.error){
+
+      const {field,message}=res.error.data;
+      if(field == "email" && message=="Email is not verified") return setallerrors({email:res.error.data.message})
+      if (message == "Invalid credentials") return setallerrors({password:res.error.data.message})
+      
+    }
+    else{
+      navigate("/dashboard")
+      console.log("Login Success",res);
+    }
 
   };
 

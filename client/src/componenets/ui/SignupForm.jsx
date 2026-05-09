@@ -8,10 +8,10 @@ import { TiTick } from "react-icons/ti";
 import { Link, useNavigate } from "react-router";
 import Button from "./Button";
 import Input from "./Input";
-import { useAddNewUserMutation } from "../../services/api";
+import {  useRegistrationMutation } from "../../services/api";
 
 const SignupForm = () => {
-  const [register]=useAddNewUserMutation();
+  const [register]=useRegistrationMutation();
   const [formdata, setformdata] = useState({
     avatar: "",
     fullname: "",
@@ -75,8 +75,19 @@ const SignupForm = () => {
 
     setallErrors({})
     const res=await register(formdata);
-    console.log("Registered successfully",res)
+    if(res.error){
+      const {field ,message}=res.error.data
+      if(field == "fullname") return setallErrors({fullname:res.error.data.message})
+      if(field == "email") return setallErrors({email:res.error.data.message})
+      if(field == "password") return setallErrors({password:res.error.data.message})    
+      return newerror
 
+    }else{
+      navigate("/email-verify",{
+        state:{email:formdata.email}
+      })
+      console.log("Registered successfully",res)
+    }
 
     
   };
