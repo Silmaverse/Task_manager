@@ -10,7 +10,8 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Register />} />
+        <Route index element={<Dashboard />} />
+        <Route path="/registration" element={<Register />} />
         <Route path="/login" element={<Login />} /> 
         <Route path="/email-verify" element={<EmailVerify/>} />
         <Route path="/dashboard" element={<Dashboard/>}/>         
