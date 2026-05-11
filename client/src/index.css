@@ -8,6 +8,7 @@ input::-webkit-inner-spin-button {
 
 @utility container {
   margin-inline: auto;
+  padding: 2rem;
 }
 
 
