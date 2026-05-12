@@ -3,18 +3,24 @@ import { HiDotsVertical } from "react-icons/hi";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import seller1 from "../../assets/images/seller1.png";
 import seller2 from "../../assets/images/seller2.png";
+import Button from "./Button";
 
-const ProjectCard = () => {
+const ProjectCard = ({status,length=3}) => {
+
+   const arr=Array(length).fill("")
+
   return (
     <>
-      <div className="w-98.5 py-3.75 px-6 rounded-2xl bg-primary mt-11.75">
+      <div className="w-100 py-3.75 px-6 rounded-2xl bg-primary mt-11.75">
         <div className="heading flex justify-between items-center border-b border-b-background pb-3.75">
           <p className="font-poppins text-[16px] font-semibold text-textprimary">
-            Planing
+            {status}
           </p>
           <HiDotsVertical className="text-[#9A9AAF]" />
         </div>
-        <div className="w-86.75 p-3.75 rounded-lg ">
+        {
+          arr.map((_,index)=>(
+        <div className="w-86.75 p-3 rounded-lg border border-background mt-8">
           <div className="flex justify-between items-center">
             <div className="flex gap-3 items-center">
               <div className="circle w-13.5 h-13.5 rounded-full border-[7px] border-background flex justify-center items-center">
@@ -40,7 +46,7 @@ const ProjectCard = () => {
               Quisque imperdiet elit sed nisi volutpat
             </p>
           </div>
-          <div className="additionalinfo flex justify-between items-center mt-4.5">
+          <div className="additionalinfo flex gap-50 items-center mt-4.5">
             <div className="priority w-10.75 h-5.5 rounded-sm bg-background py-0.75 px-3">
               <p className="text-[10px] text-[#EC8C56] font-poppins font-normal">
                 High
@@ -60,6 +66,11 @@ const ProjectCard = () => {
           </div>
          
         </div>
+
+          ))
+        }
+
+        <Button variant={"secondary"} children={"Add New"} customstyles={" "}></Button>
       
       </div>
     </>

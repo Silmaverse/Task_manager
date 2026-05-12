@@ -5,14 +5,13 @@ import { Outlet } from "react-router";
 
 const LayoutOne = () => {
   return (
-    <div>
+    <>
       <Navbar />
       <div className="flex">
-
-      <SideNav />
-      <Outlet />
+        <SideNav />
+        <Outlet />
       </div>
-    </div>
+    </>
   );
 };
 
