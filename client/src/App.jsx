@@ -7,6 +7,7 @@ import EmailVerify from "./pages/EmailVerify";
 import Dashboard from "./pages/Dashboard";
 import LayoutOne from "./layouts/LayoutOne";
 
+
 const App = () => {
   return (
     <BrowserRouter>

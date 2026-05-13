@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import ProjectCard from "../componenets/ui/ProjectCard";
 import { SlCalender } from "react-icons/sl";
 import Statistics from "../componenets/ui/Statistics";
+import BasicModal from "../Modals/BasicModal";
 
 const Dashboard = () => {
+  
+
   return (
     <>
       <section className="w-full bg-[#F5F5FA]">
@@ -18,12 +21,7 @@ const Dashboard = () => {
               </p>
             </div>
             <div className="righttxt flex flex-col gap-2 items-center">
-              <div className="flex gap-4 items-center">
-                <p className="font-poppins font-semibold text-[14px] text-textprimary">Create a New Project</p>
-                <button className="w-16 font-poppins font-normal text-2xl text-btnprimary rounded-2xl border-4 border-btnprimary">
-                  +
-                </button>
-              </div>
+              <BasicModal/>
               <div className="flex gap-2">
               <SlCalender className="text-[#7E7E8F]" />
               <p className="font-poppins text-[12px] font-normal text-[#7E7E8F]">

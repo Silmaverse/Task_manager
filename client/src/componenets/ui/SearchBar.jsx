@@ -11,7 +11,7 @@ const SearchBar = () => {
           <input
             type="text"
             placeholder="Search"
-            className="w-full font-poppins font-semibold text-sm text-textsecondary outline-none"
+            className="w-full font-poppins border-none font-semibold text-sm text-textsecondary outline-none"
           />
         </div>
         <CiMicrophoneOn className="w-5 h-5 text-textsecondary" />

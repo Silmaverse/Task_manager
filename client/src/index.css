@@ -1,4 +1,8 @@
 @import "tailwindcss";
+@import "tailwindcss" important;
+
+
+
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
