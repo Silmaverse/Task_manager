@@ -20,7 +20,7 @@ const ProjectCard = ({status,length=3}) => {
         </div>
         {
           arr.map((_,index)=>(
-        <div className="w-86.75 p-3 rounded-lg border border-background mt-8">
+        <div className="w-86.75 p-3 rounded-lg border border-background mt-8" key={index}>
           <div className="flex justify-between items-center">
             <div className="flex gap-3 items-center">
               <div className="circle w-13.5 h-13.5 rounded-full border-[7px] border-background flex justify-center items-center">

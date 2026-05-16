@@ -12,7 +12,8 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 612,
+  width: 680,   // prevents modal from exceeding screen
+  overflowY: "auto",   // allows scrolling
   padding: 53,
   bgcolor: "background.paper",
   boxShadow: 24,

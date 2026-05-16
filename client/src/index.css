@@ -1,8 +1,57 @@
 @import "tailwindcss";
 @import "tailwindcss" important;
 
+.ProseMirror {
+  outline: none;
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 200px;
 
+}
+.ProseMirror iframe {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 8px;
+  max-height: 40vh;
+}
 
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 */
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  left: 0;
+  top: 0;
+}
+
+.ProseMirror p {
+  margin: 6px 0;
+}
+
+.ProseMirror h1 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.ProseMirror h2 {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.ProseMirror ul {
+  padding-left: 20px;
+  list-style: disc;
+}
+
+.ProseMirror ol {
+  padding-left: 20px;
+  list-style: decimal;
+}
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

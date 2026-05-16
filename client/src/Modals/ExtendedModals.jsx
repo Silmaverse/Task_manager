@@ -1,11 +1,16 @@
 import React from "react";
 import Button from "../componenets/ui/Button";
-import Richtexteditor from "./Richtexteditor";
+import WysiwygEditor from "./WysiwygEditor";
 
 const ExtendedModals = () => {
+
+  const handleSubmit=(e)=>{
+    e.preventDefault()
+  }
+
   return (
     <>
-      <form>
+      <form onSubmit={(e)=>handleSubmit(e)}>
         <div className="w-full">
           <label
             htmlFor="Project"
@@ -24,7 +29,7 @@ const ExtendedModals = () => {
           >
             Description
           </label>
-          <Richtexteditor/>
+          <WysiwygEditor/>
           <div className="w-full">
             <Button
               variant={"secondary"}
