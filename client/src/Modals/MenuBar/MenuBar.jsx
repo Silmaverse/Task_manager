@@ -33,7 +33,7 @@ export default function MenuBar({editor,EditorContent }) {
         <Menuvideo editor={editor}/>
         <MenuDone editor={editor}/>
       </div>
-      <div className="p-4 min-h-[250px]">
+      <div className="p-4 min-h-62.5">
         
          <EditorContent editor={editor} />
         
