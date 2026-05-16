@@ -9,7 +9,15 @@ import Menuvideo from "./Menufunction/Menuvideo";
 import Menutext from "./Menufunction/Menutext";
 import { MenuDone } from "./Menufunction/MenuDone";
 
-export default function MenuBar({editor , EditContent}) {
+export default function MenuBar({editor,EditorContent }) {
+  const handleEditorChange = () => {
+  const html = editor.getHTML();
+
+  setprojectData((prev) => ({
+    ...prev,
+    description: html,
+  }));
+};
  
   return (
     <div className="max-w-3xl mx-auto  border border-background rounded-lg shadow-md bg-white">
@@ -25,15 +33,14 @@ export default function MenuBar({editor , EditContent}) {
         <Menuvideo editor={editor}/>
         <MenuDone editor={editor}/>
       </div>
-
-      {/* Editor */}
       <div className="p-4 min-h-[250px]">
-        {
-            EditContent &&
-         <EditContent editor={editor} />
-        }
+        
+         <EditorContent editor={editor} />
+        
         
       </div>
+
+      
     </div>
   );
 }

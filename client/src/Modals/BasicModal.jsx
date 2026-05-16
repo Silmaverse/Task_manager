@@ -1,7 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import { padding } from "@mui/system";
+import { height, padding } from "@mui/system";
 import Fade from "@mui/material/Fade";
 import Backdrop from "@mui/material/Backdrop";
 import { RxCross2 } from "react-icons/rx";
@@ -12,8 +12,9 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 680,   // prevents modal from exceeding screen
-  overflowY: "auto",   // allows scrolling
+  width: 738, // prevents modal from exceeding screen
+  maxHeight: "90vh",
+  overflowY: "auto", // allows scrolling
   padding: 53,
   bgcolor: "background.paper",
   boxShadow: 24,
@@ -23,8 +24,8 @@ const style = {
 export default function BasicModal() {
   const [open, setOpen] = React.useState(false);
   const [show, setShow] = React.useState(false);
-  const handleOpen = () => (setOpen(true),setShow(false));
-  const handleClose = () => (setOpen(false));
+  const handleOpen = () => (setOpen(true), setShow(false));
+  const handleClose = () => setOpen(false);
 
   return (
     <div>
@@ -61,34 +62,38 @@ export default function BasicModal() {
             >
               <RxCross2 />
             </button>
-            <h6 className="text-xl text-textprimary font-poppins font-semibold text-center mb-12">
-              Create a New Project
-            </h6>
-            {
-              !show &&
-            <div className="w-full my-9.25">
-              <button
-                onClick={() => setShow(!show)}
-                className="w-23 h-23 block m-auto font-poppins font-normal text-2xl text-btnprimary rounded-2xl border-4 border-btnprimary"
-              >
-                +
-              </button>
-            </div>
-            }
-            {show && (
-              <ExtendedModals/>
+
+            {!show && (
+              <>
+                <h6 className="text-xl text-textprimary font-poppins font-semibold text-center mb-12">
+                  Create a New Project
+                </h6>
+                <div className="w-full my-9.25">
+                  <button
+                    onClick={() => setShow(!show)}
+                    className="w-23 h-23 block m-auto font-poppins font-normal text-2xl text-btnprimary rounded-2xl border-4 border-btnprimary"
+                  >
+                    +
+                  </button>
+                </div>
+              </>
             )}
-            {
-              !show &&
-            <>
-            <p className="text-[16px] text-textprimary font-poppins font-normal text-center">
-              Blank project
-            </p>
-            <p className="text-[16px] text-textsecondary font-poppins font-normal text-center">
-              Start from scratch
-            </p>
-            </>
-            }
+            {show && (
+              <>
+                
+                <ExtendedModals />
+              </>
+            )}
+            {!show && (
+              <>
+                <p className="text-[16px] text-textprimary font-poppins font-normal text-center">
+                  Blank project
+                </p>
+                <p className="text-[16px] text-textsecondary font-poppins font-normal text-center">
+                  Start from scratch
+                </p>
+              </>
+            )}
           </Box>
         </Fade>
       </Modal>

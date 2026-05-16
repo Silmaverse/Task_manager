@@ -13,7 +13,7 @@ import Image from "@tiptap/extension-image";
 import FileHandler from "@tiptap/extension-file-handler";
 import Youtube from "@tiptap/extension-youtube";
 
-const WysiwygEditor = () => {
+const WysiwygEditor = ({setprojectData}) => {
   const ParagraphIndent = Extension.create({
     name: "paragraphIndent",
 
@@ -79,14 +79,27 @@ const WysiwygEditor = () => {
           class: "w-full rounded-lg",
         },
       }),
+      
     ],
+    onUpdate({ editor }) {
+      setprojectData((prev) => ({
+        ...prev,
+        description: editor.getText(),
+      }));
+    }
   });
+
+  
+
   
   if (!editor) return null;
   return (
     <>
-  
-      <MenuBar editor={editor} editoContent={EditorContent}/>
+     <div>
+      <MenuBar editor={editor} EditorContent={EditorContent} />
+      {/* Editor */}
+      
+     </div>
     
     </>
   )
