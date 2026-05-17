@@ -3,6 +3,7 @@ import ProjectCard from "../componenets/ui/ProjectCard";
 import { SlCalender } from "react-icons/sl";
 import Statistics from "../componenets/ui/Statistics";
 import BasicModal from "../Modals/BasicModal";
+import Members from "../componenets/ui/Members";
 
 const Dashboard = () => {
   
@@ -40,6 +41,9 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+           <Members/>
+      
+          
         </div>
       </section>
     </>
