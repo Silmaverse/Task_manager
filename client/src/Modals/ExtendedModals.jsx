@@ -44,7 +44,7 @@ const ExtendedModals = () => {
                 name="title"
                 value={projectData.title}
                 onChange={handleInputChange}
-                className="text-sm  font-poppins font-normal text-[#9A9AAF] w-full outline-2 outline-background rounded-lg pl-3.25 py-4"
+                className="text-sm  font-poppins font-normal text-[#9A9AAF] w-full outline-2 outline-background rounded-lg pl-5.25 py-4"
               ></input>
               <label
                 htmlFor="Project"
@@ -52,7 +52,7 @@ const ExtendedModals = () => {
               >
                 Description
               </label>
-              <WysiwygEditor setprojectData={setprojectData} />
+              <WysiwygEditor setprojectData={projectData} />
               <div className="w-full">
                 <Button
                   variant={"secondary"}
